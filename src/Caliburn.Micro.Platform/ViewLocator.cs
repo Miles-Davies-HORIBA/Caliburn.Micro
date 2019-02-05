@@ -359,7 +359,14 @@
             var viewType = AssemblySource.FindTypeByNames(viewTypeList);
 
             if (viewType == null) {
-                Log.Warn("View not found. Searched: {0}.", string.Join(", ", viewTypeList.ToArray()));
+                if (modelType.BaseType != null)
+                {
+                    return LocateTypeForModelType(modelType.BaseType, displayLocation, context);
+                }
+                else
+                {
+                    Log.Warn("View not found. Searched: {0}.", string.Join(", ", viewTypeList.ToArray()));
+                }
             }
 
             return viewType;
